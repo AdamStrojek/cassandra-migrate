@@ -5,6 +5,8 @@ from __future__ import (absolute_import, division,
 from builtins import str, open
 
 import os
+from string import Template
+
 import yaml
 
 from .migration import Migration
@@ -44,6 +46,10 @@ def _assert_type(data, key, tpe, default=None):
         raise ValueError("Config error: {}: expected {}, found {}".format(
             key, tpe, type(value)))
     return value
+
+
+def _render_value(value):
+    return Template(value).safe_substitute(os.environ)
 
 
 class MigrationConfig(object):
