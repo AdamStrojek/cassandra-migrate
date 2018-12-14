@@ -80,7 +80,7 @@ class MigrationConfig(object):
         at least `keyspace`, `migrations_path` and `migrations_table`
         """
 
-        self.keyspace = _assert_type(data, 'keyspace', str)
+        self.keyspace = _render_value(_assert_type(data, 'keyspace', str))
 
         self.profiles = self.DEFAULT_PROFILES.copy()
         profiles = _assert_type(data, 'profiles', dict, default={})
@@ -91,7 +91,7 @@ class MigrationConfig(object):
                                                bool, default=True)
             }
 
-        migrations_path = _assert_type(data, 'migrations_path', str)
+        migrations_path = _render_value(_assert_type(data, 'migrations_path', str))
         self.migrations_path = os.path.join(base_path, migrations_path)
 
         self.migrations = Migration.glob_all(
